@@ -1,4 +1,4 @@
-package com.nguyen.jpmorgan
+package com.nguyen.jpmorgan.viewmodel
 
 import android.app.Application
 import android.content.Context
@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nguyen.jpmorgan.MyApplication
 import com.nguyen.jpmorgan.model.Record
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,13 +39,15 @@ class WeatherViewModel(private val application: MyApplication) : AndroidViewMode
     }
 
     fun saveLocation(city: String) {
-        val preferences = getApplication<Application>().applicationContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).edit()
+        val preferences = getApplication<Application>().applicationContext.getSharedPreferences(
+            PREFERENCE_NAME, Context.MODE_PRIVATE).edit()
         preferences.putString(PREFERENCE_KEY, city)
         preferences.apply()
     }
 
     private fun fetchLocation(): String? {
-        val preferences = getApplication<Application>().applicationContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val preferences = getApplication<Application>().applicationContext.getSharedPreferences(
+            PREFERENCE_NAME, Context.MODE_PRIVATE)
         return preferences.getString(PREFERENCE_KEY, null)
     }
 }

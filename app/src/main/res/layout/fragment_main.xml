@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#23b5eb"
     android:padding="0dp"
-    tools:context=".MainFragment">
+    tools:context=".view.MainFragment">
 
     <TextView
         android:id="@+id/location"

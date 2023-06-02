@@ -1,4 +1,4 @@
-package com.nguyen.jpmorgan
+package com.nguyen.jpmorgan.model
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

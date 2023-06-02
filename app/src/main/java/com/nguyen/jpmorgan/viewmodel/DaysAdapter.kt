@@ -1,8 +1,9 @@
-package com.nguyen.jpmorgan
+package com.nguyen.jpmorgan.viewmodel
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nguyen.jpmorgan.R
 import com.nguyen.jpmorgan.databinding.ItemDayBinding
 import com.nguyen.jpmorgan.model.Day
 import java.text.SimpleDateFormat
@@ -43,13 +44,13 @@ class DaysAdapter(private val days: List<Day>) : RecyclerView.Adapter<DaysAdapte
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DaysAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemDayBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: DaysAdapter.ViewHolder, position: Int) = holder.bind(days[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(days[position])
 
     override fun getItemCount() = days.size
 }

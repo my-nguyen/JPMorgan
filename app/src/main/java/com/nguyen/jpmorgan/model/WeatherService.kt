@@ -1,6 +1,5 @@
-package com.nguyen.jpmorgan
+package com.nguyen.jpmorgan.model
 
-import com.nguyen.jpmorgan.model.Record
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
