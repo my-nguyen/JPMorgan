@@ -14,7 +14,7 @@ class DaysAdapter(private val days: List<Day>) : RecyclerView.Adapter<DaysAdapte
         fun bind(day: Day) {
             binding.day.text = getDay(adapterPosition).split(",")[0]
             binding.image.setImageResource(getResource(day.weather[0].id))
-            binding.temperature.text = "${day.temp.max.roundToInt()} \u00B0"
+            binding.temperature.text = "${day.temp.max.roundToInt()}\u00B0"
         }
 
         private fun getResource(id: Int): Int {

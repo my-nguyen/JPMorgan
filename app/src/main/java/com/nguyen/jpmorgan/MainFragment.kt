@@ -2,7 +2,6 @@ package com.nguyen.jpmorgan
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyen.jpmorgan.databinding.FragmentMainBinding
 import com.nguyen.jpmorgan.model.Day
 import kotlin.math.roundToInt
-
 
 class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel: WeatherViewModel by viewModels {
@@ -42,10 +40,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             AlertDialog.Builder(context)
                 .setTitle("Enter location")
                 .setMessage("Please use the menu search button to enter a location")
-                .setPositiveButton(android.R.string.yes,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        // Continue with delete operation
-                    }) // A null listener allows the button to dismiss the dialog and take no further action.
+                .setPositiveButton("OK", null)
                 .show()
         }
 
@@ -61,7 +56,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 binding.temperature.text = java.lang.String.valueOf(today.temp.max.roundToInt())
                 val max = today.temp.max.roundToInt()
                 val min = today.temp.min.roundToInt()
-                binding.highLow.text = "H:$max\u00B0 L:$min\u00B0"
+                binding.lowHigh.text = "Low $min\u00B0 - High $max\u00B0"
 
                 // display the temperature of the next 16 days in a RecyclerView
                 days.clear()
