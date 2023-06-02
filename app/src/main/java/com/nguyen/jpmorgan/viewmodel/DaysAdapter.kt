@@ -10,11 +10,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
+private const val TAG = "DaysAdapter"
+
 class DaysAdapter(private val days: List<Day>) : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(day: Day) {
-            binding.day.text = getDay(adapterPosition).split(",")[0]
+            val pair = getDay(adapterPosition)
+            binding.day.text = pair.first
+            binding.date.text = pair.second
             binding.image.setImageResource(getResource(day.weather[0].id))
+            binding.condition.text = day.weather[0].main
             binding.temperature.text = "${day.temp.max.roundToInt()}\u00B0"
         }
 
@@ -33,14 +38,14 @@ class DaysAdapter(private val days: List<Day>) : RecyclerView.Adapter<DaysAdapte
             }
         }
 
-        private fun getDay(position: Int): String {
+        private fun getDay(position: Int): Pair<String, String> {
             val calendar = GregorianCalendar()
             calendar.add(GregorianCalendar.DATE, position)
             val dayFormat = SimpleDateFormat("EEEE")
             val day = dayFormat.format(calendar.time)
             val dateFormat = SimpleDateFormat("MMMM dd")
             val date = dateFormat.format(calendar.time)
-            return "$day, $date"
+            return Pair(day, date)
         }
     }
 
