@@ -12,7 +12,7 @@ import kotlin.math.roundToInt
 class DaysAdapter(private val days: List<Day>) : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(day: Day) {
-            binding.time.text = getDay(adapterPosition).split(",")[0]
+            binding.day.text = getDay(adapterPosition).split(",")[0]
             binding.image.setImageResource(getResource(day.weather[0].id))
             binding.temperature.text = "${day.temp.max.roundToInt()} \u00B0"
         }

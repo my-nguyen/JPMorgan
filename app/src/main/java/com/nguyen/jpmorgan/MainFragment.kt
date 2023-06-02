@@ -1,6 +1,8 @@
 package com.nguyen.jpmorgan
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyen.jpmorgan.databinding.FragmentMainBinding
 import com.nguyen.jpmorgan.model.Day
 import kotlin.math.roundToInt
+
 
 class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel: WeatherViewModel by viewModels {
@@ -36,6 +39,14 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             viewModel.fetchWeather(viewModel.location!!)
         } else {
             binding.root.visibility = View.INVISIBLE
+            AlertDialog.Builder(context)
+                .setTitle("Enter location")
+                .setMessage("Please use the menu search button to enter a location")
+                .setPositiveButton(android.R.string.yes,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        // Continue with delete operation
+                    }) // A null listener allows the button to dismiss the dialog and take no further action.
+                .show()
         }
 
         viewModel.record.observe(viewLifecycleOwner) { record ->
@@ -67,10 +78,10 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 // get a hold of the search menu item
                 menuInflater.inflate(R.menu.menu_main, menu)
                 val searchItem = menu.findItem(R.id.action_search)
-                val searchView = searchItem.actionView as SearchView?
+                val searchView = searchItem.actionView as SearchView
 
                 // listen for the search query
-                searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(location: String): Boolean {
                         // reset the search menu item
                         searchView.clearFocus()
@@ -82,15 +93,11 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         return true
                     }
 
-                    override fun onQueryTextChange(s: String): Boolean {
-                        return false
-                    }
+                    override fun onQueryTextChange(s: String) = false
                 })
             }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return false
-            }
+            override fun onMenuItemSelected(menuItem: MenuItem) = false
         })
     }
 
