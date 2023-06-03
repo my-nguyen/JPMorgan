@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nguyen.jpmorgan.MyApplication
 import com.nguyen.jpmorgan.model.Record
+import com.nguyen.jpmorgan.model.Repository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,12 +17,12 @@ private const val PREFERENCE_NAME = "SharedPreferences"
 private const val PREFERENCE_KEY = "location"
 private const val TAG = "WeatherViewModel"
 
-class WeatherViewModel(private val application: MyApplication) : AndroidViewModel(application) {
+class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     val record = MutableLiveData<Record>()
     val location = fetchLocation()
 
     fun fetchWeather(location: String) {
-        application.repository.fetchWeather(location).enqueue(object : Callback<Record> {
+        Repository.fetchWeather(location).enqueue(object : Callback<Record> {
             override fun onResponse(call: Call<Record>, response: Response<Record>) {
                 Log.d(TAG, "onResponse $response")
                 if (response.body() == null) {
@@ -52,7 +52,7 @@ class WeatherViewModel(private val application: MyApplication) : AndroidViewMode
     }
 }
 
-class WeatherViewModelFactory(private val application: MyApplication) : ViewModelProvider.Factory {
+class WeatherViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

@@ -7,7 +7,7 @@ private const val BASE_URL = "https://api.openweathermap.org/data/2.5/forecast/"
 private const val API_KEY = "a0e4b2727858f8dc3bdc0428ef7e3712"
 private const val IMPERIAL_UNITS = "imperial"
 
-class Repository {
+object Repository {
     private val service: WeatherService
 
     init {
