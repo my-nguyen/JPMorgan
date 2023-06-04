@@ -24,7 +24,7 @@ import kotlin.math.roundToInt
 
 class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel by viewModels<WeatherViewModel> {
-        WeatherViewModelFactory(requireActivity().application)
+        WeatherViewModelFactory(requireActivity().application, (requireActivity().application as MyApplication).repository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

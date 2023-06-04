@@ -17,12 +17,18 @@ private const val PREFERENCE_NAME = "SharedPreferences"
 private const val PREFERENCE_KEY = "location"
 private const val TAG = "WeatherViewModel"
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
+// 2 params:
+// 1. application of type Application and not MyApplication, so ViewModelTest can instantiate a
+//    WeatherViewModel with ApplicationProvider.getApplicationContext(). application is necessary
+//    for WeatherViewModel to derive from AndroidViewModel and for use in calling
+//    getApplication<Application>().applicationContext
+// 2. repository
+class WeatherViewModel(application: Application, private val repository: Repository) : AndroidViewModel(application) {
     val record = MutableLiveData<Record>()
     val location = fetchLocation()
 
     fun fetchWeather(location: String) {
-        Repository.fetchWeather(location).enqueue(object : Callback<Record> {
+        repository.fetchWeather(location).enqueue(object : Callback<Record> {
             override fun onResponse(call: Call<Record>, response: Response<Record>) {
                 Log.d(TAG, "onResponse $response")
                 if (response.body() == null) {
@@ -52,11 +58,11 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     }
 }
 
-class WeatherViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class WeatherViewModelFactory(private val application: Application, private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return WeatherViewModel(application) as T
+            return WeatherViewModel(application, repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
