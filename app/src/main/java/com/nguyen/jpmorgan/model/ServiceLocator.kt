@@ -1,6 +1,6 @@
 package com.nguyen.jpmorgan.model
 
-object RepoLocator {
+object ServiceLocator {
     // this repository property can be set by either instantiating a RemoteRepository via
     // provideRepository(), or by being directly assigned to FakeRepository in WeatherViewModelTest
     var repository: Repository? = null

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyen.jpmorgan.*
 import com.nguyen.jpmorgan.databinding.FragmentMainBinding
 import com.nguyen.jpmorgan.model.Day
-import com.nguyen.jpmorgan.model.RepoLocator
+import com.nguyen.jpmorgan.model.ServiceLocator
 import com.nguyen.jpmorgan.viewmodel.DaysAdapter
 import com.nguyen.jpmorgan.viewmodel.WeatherViewModel
 import com.nguyen.jpmorgan.viewmodel.WeatherViewModelFactory
@@ -25,7 +25,7 @@ import kotlin.math.roundToInt
 
 class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel by viewModels<WeatherViewModel> {
-        WeatherViewModelFactory(requireActivity().application, RepoLocator.provideRepository())
+        WeatherViewModelFactory(requireActivity().application, ServiceLocator.provideRepository())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
