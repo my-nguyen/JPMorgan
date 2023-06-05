@@ -18,5 +18,5 @@ class RemoteRepository : Repository {
         service = retrofit.create(WeatherService::class.java)
     }
 
-    override fun fetchWeather(location: String) = service.fetchWeather(location, IMPERIAL_UNITS, 16, API_KEY)
+    override suspend fun fetchWeather(location: String) = service.fetchWeather(location, IMPERIAL_UNITS, 16, API_KEY)
 }

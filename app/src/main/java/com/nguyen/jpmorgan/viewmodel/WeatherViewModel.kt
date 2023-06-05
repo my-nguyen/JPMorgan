@@ -2,16 +2,16 @@ package com.nguyen.jpmorgan.viewmodel
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.nguyen.jpmorgan.model.Record
 import com.nguyen.jpmorgan.model.Repository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val PREFERENCE_NAME = "SharedPreferences"
 private const val PREFERENCE_KEY = "location"
@@ -28,20 +28,12 @@ class WeatherViewModel(application: Application, private val repository: Reposit
     val location = fetchLocation()
 
     fun fetchWeather(location: String) {
-        repository.fetchWeather(location).enqueue(object : Callback<Record> {
-            override fun onResponse(call: Call<Record>, response: Response<Record>) {
-                Log.d(TAG, "onResponse $response")
-                if (response.body() == null) {
-                    Log.w(TAG, "Invalid response from openweathermap.org")
-                } else {
-                    record.value = response.body()
-                }
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = repository.fetchWeather(location)
+            withContext(Dispatchers.Main) {
+                record.value = result
             }
-
-            override fun onFailure(call: Call<Record>, t: Throwable) {
-                Log.e(TAG, "onFailure $t")
-            }
-        })
+        }
     }
 
     fun saveLocation(city: String) {
