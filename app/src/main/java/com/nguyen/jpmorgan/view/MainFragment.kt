@@ -58,7 +58,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 binding.location.text = record.city.name
                 val today = record.list[0]
                 binding.condition.text = today.weather[0].main
-                binding.temperature.text = java.lang.String.valueOf(today.temp.max.roundToInt())
+                binding.temperature.text = java.lang.String.valueOf(today.temp.day.roundToInt())
                 val max = today.temp.max.roundToInt()
                 val min = today.temp.min.roundToInt()
                 binding.lowHigh.text = "Low $min\u00B0 - High $max\u00B0"
