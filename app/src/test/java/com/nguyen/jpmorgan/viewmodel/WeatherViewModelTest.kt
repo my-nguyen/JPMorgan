@@ -23,10 +23,10 @@ import java.util.concurrent.TimeoutException
 class WeatherViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+    // need this rule to get past the error "java.util.concurrent.TimeoutException: LiveData value was never set."
     @get:Rule
     val coroutineScope =  MainCoroutineScopeRule()
 
-    // error: java.util.concurrent.TimeoutException: LiveData value was never set.
     @Test
     fun getRecord() = runTest {
         val viewModel = WeatherViewModel(ApplicationProvider.getApplicationContext(), FakeRepository())
