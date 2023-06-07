@@ -8,11 +8,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nguyen.jpmorgan.model.FakeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -26,6 +23,8 @@ import java.util.concurrent.TimeoutException
 class WeatherViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
+    val coroutineScope =  MainCoroutineScopeRule()
 
     // error: java.util.concurrent.TimeoutException: LiveData value was never set.
     @Test
@@ -33,7 +32,9 @@ class WeatherViewModelTest {
         val viewModel = WeatherViewModel(ApplicationProvider.getApplicationContext(), FakeRepository())
         viewModel.fetchWeather("London")
         val record = viewModel.record.getOrAwaitValue()
-        assertThat(record, (not(nullValue())))
+        assertThat(record, not(nullValue()))
+        assertThat(record.city.name, equalTo("London"))
+        assertThat(record.list.size, equalTo(7))
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
