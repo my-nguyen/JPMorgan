@@ -21,8 +21,12 @@ import java.util.concurrent.TimeoutException
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
 class WeatherViewModelTest {
+    // JUnit rule that configures LiveData to execute each task synchronously
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+    // custom rule that configures Dispatchers.Main to use a TestCoroutineDispatcher from
+    // kotlinx-coroutines-test. This allows tests to advance a virtual-clock for testing, and allows
+    // code to use Dispatchers.Main in unit tests.
     // need this rule to get past the error "java.util.concurrent.TimeoutException: LiveData value was never set."
     @get:Rule
     val coroutineScope =  MainCoroutineScopeRule()
